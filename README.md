@@ -1,59 +1,128 @@
-# Quiz
+# Quiz Master
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.2.3.
+Quiz Master est une application web de quiz développée avec Angular. Elle propose plusieurs séries de questions sur des thèmes variés.
 
-## Development server
+# Objectifs
+D'un point de vue utilisateur, l'objectif derrière ce site est de proposer une plateforme ludique offrant des quiz afin de challenger les utilisateurs sur leurs connaissances.
+D'un point de vue concepteur, l'objectif derrière ce projet était pour moi de me faire la main sur l'utilisation d'Angular dans le cadre de la conception d'un site web.
 
-To start a local development server, run:
+## Fonctionnalités
 
-```bash
-ng serve
+- Affichage des quiz disponibles depuis la page d'accueil.
+- Filtrage des quiz par catégorie.
+- Présentation du titre, de la description et du nombre de questions avant le démarrage.
+- Navigation question par question.
+- Sélection d'une réponse parmi plusieurs options.
+- Activation des boutons de navigation uniquement après sélection d'une réponse.
+- Calcul du score à la fin du quiz.
+- Affichage du score, du total et des bonnes réponses.
+- Page « À propos » présentant l'application.
+- Page dédiée aux routes inexistantes.
+- Rendu côté serveur avec Angular SSR.
+
+## Aperçu
+
+### Accueil
+
+![Page d'accueil](public/img/home.png)
+
+### Présentation d'un quiz
+
+![Présentation d'un quiz](public/img/intro_quiz.png)
+
+### Question
+
+![Question de quiz](public/img/quiz.png)
+
+### Résultats
+
+![Résultats du quiz](public/img/result.png)
+
+## Technologies utilisées
+
+- Angular 22
+- TypeScript
+- HTML
+- CSS
+- Angular Router
+
+Une partie du CSS a été générée avec l'aide d'une intelligence artificielle,
+puis intégrée et adaptée au projet.
+
+## Structure du projet
+
+```text
+public/
+├── data/                       # Données des quiz au format JSON
+└── img/                        # Captures utilisées dans la documentation
+
+src/
+├── app/
+│   ├── components/
+│   │   ├── quiz-details/       # Informations générales d'un quiz
+│   │   ├── quiz-item/          # Carte d'un quiz sur l'accueil
+│   │   └── quiz-question/      # Affichage d'une question et de ses options
+│   ├── models/
+│   │   └── quiz.models.ts      # Types Quiz et QuizInfos
+│   ├── pages/
+│   │   ├── about/              # Page À propos
+│   │   ├── home/               # Liste et filtrage des quiz
+│   │   ├── not-found/          # Page 404
+│   │   ├── quiz/               # Déroulement d'un quiz
+│   │   └── score/              # Résultats
+│   ├── app.routes.ts           # Routes de l'application
+│   └── quiz-result.ts          # Stockage temporaire du score et du total
+├── main.ts                     # Point d'entrée navigateur
+├── main.server.ts              # Point d'entrée serveur
+└── server.ts                   # Serveur Angular SSR
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Données des quiz
 
-## Code scaffolding
+Les quiz sont placés dans le dossier `public/data` et sont structurés sous la forme de fichiers .json :
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
+```json
+{
+  "id": 2,
+  "name": "Sports 1",
+  "description": "Un quiz consacré aux connaissances sportives.",
+  "kinds": ["Sports", "Culture générale"],
+  "questions": [
+    {
+      "id": 1,
+      "question": "Combien de joueurs une équipe de football aligne-t-elle ?",
+      "options": ["9", "10", "11", "12"],
+      "answer": 2
+    }
+  ]
+}
 ```
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Routes principales
 
-```bash
-ng generate --help
-```
+| Route | Description |
+|---|---|
+| `/` | Page d'accueil |
+| `/home` | Page d'accueil |
+| `/quiz/:id` | Déroulement d'un quiz |
+| `/about` | Présentation de l'application |
+| `/score` | Résultats du dernier quiz |
+| `**` | Page non trouvée |
 
-## Building
+Le fichier du quiz est actuellement transmis à la page de quiz via le paramètre `file` de l'URL. Le score et le total sont stockés temporairement dans le service `QuizResult`.
 
-To build the project run:
+## Limites connues
 
-```bash
-ng build
-```
+- Le score stocké dans `QuizResult` est perdu après un rechargement complet de
+  la page ou une navigation directe vers `/score`.
+- Les bonnes réponses sont encore transmises à la page de résultats via un
+  paramètre d'URL.
+- Le parcours actuel ne propose pas de bouton « Précédent ».
+- La suite de tests doit encore être complétée pour couvrir tout le parcours
+  utilisateur et les dépendances de la page des résultats.
+- Les données JSON sont chargées depuis des fichiers statiques ; il n'y a pas
+  de backend ni de compte utilisateur.
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## Informations complémentaires
+Ce site a été réalisé en environ 10 heures de travail. Cette plateforme n'a pas pour vocation à être déployée en ligne et n'a qu'un objectif pédagogique.
+Ce projet avait avant tout pour but d'explorer les bases d'Angular dans le cadre de l'élaboration d'un site web.

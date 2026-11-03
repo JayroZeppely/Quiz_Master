@@ -19,3 +19,5 @@ interface QuizInfos {
   }>;
   numberOfQuestions: number;
 }
+
+export type { Quiz, QuizInfos };

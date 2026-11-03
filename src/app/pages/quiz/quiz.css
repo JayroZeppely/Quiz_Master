@@ -20,3 +20,8 @@
 #details-quiz-container button {
     align-self: center;
 }
+
+#finish-button-container {
+    border : none;
+    background-color: var(--color-blue);
+}

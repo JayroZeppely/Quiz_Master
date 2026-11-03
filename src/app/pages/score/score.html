@@ -1,12 +1,12 @@
 <main>
-  <section>
+  <section id="score-container">
     <h1>Félicitations</h1>
     <p>Vous avez terminé le quiz !</p>
-    <p>Votre score est de {{ score }} sur {{ total }}.</p>
+    <p>Votre score est de <strong>{{ score }}</strong> sur <strong>{{ total }}</strong>.</p>
     <p>Les bonnes réponses étaient :</p>
-    <ul>
+    <ul id="answers-list">
       @for (answer of answers; track $index) {
-        <li>{{ answer }}</li>
+        <li>Q{{$index + 1}}. {{ answer }}</li>
       }
     </ul>
     <p>Merci d'avoir participé !</p>

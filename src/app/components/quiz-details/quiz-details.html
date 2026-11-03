@@ -1,6 +1,9 @@
 <div>
   <h2>{{ name }}</h2>
   <p>{{ description }}</p>
-  <p>Kinds: {{ kinds.join(', ') }}</p>
-  <p>Number of Questions: {{ numberOfQuestions }}</p>
+  <div id="categories">
+    <h3>Catégories</h3>
+    <p >{{ kinds.join(', ') }}</p>
+  </div>
+  <p>Nombre de questions: {{ numberOfQuestions }}</p>
 </div>

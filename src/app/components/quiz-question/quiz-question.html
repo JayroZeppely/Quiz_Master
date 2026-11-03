@@ -8,16 +8,19 @@
         <input
           type="radio"
           name="question-{{ id }}"
+          id="question-{{ id }}-option-{{ $index }}"
           [checked]="selectedOption === $index"
           (change)="selectOption(id - 1, $index)"
         >
-        <label>{{ option }}</label>
+        <label for="question-{{ id }}-option-{{ $index }}">{{ option }}</label>
       </div>
     }
   </fieldset>
 </div>
 <div>
-  <button type="button" id="btn_previous" [disabled]="isPreviousDisabled" (click)="goToPreviousQuestion()">Précédent</button>
-  <button type="button" id="btn_next" [disabled]="isNextDisabled" (click)="goToNextQuestion()">Suivant</button>
+  @if (isLastQuestion) {
+    <button type="button" id="btn_finish" [disabled]="isNextDisabled" (click)="finishQuizInput()">Terminer le Quiz</button>
+  } @else {
+    <button type="button" id="btn_next" [disabled]="isNextDisabled" (click)="goToNextQuestion()">Suivant</button>
+  }
 </div>
-

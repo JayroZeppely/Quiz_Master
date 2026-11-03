@@ -1,5 +1,6 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { QuizResult } from '../../quiz-result';
 
 @Component({
   imports: [],
@@ -11,14 +12,15 @@ export class Score {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly quizResult = inject(QuizResult);
 
   score: number = 0;
   total: number = 0;
   answers: String[] = [];
 
   ngOnInit(): void {
-      this.score = parseInt(this.activatedRoute.snapshot.queryParamMap.get('score') ?? '0');
-      this.total = parseInt(this.activatedRoute.snapshot.queryParamMap.get('total') ?? '0');
+      this.score = this.quizResult.score();
+      this.total = this.quizResult.total();
       this.answers = this.activatedRoute.snapshot.queryParamMap.get('answers') ? JSON.parse(this.activatedRoute.snapshot.queryParamMap.get('answers') ?? '[]') : [];
   }
 

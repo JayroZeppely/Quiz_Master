@@ -1,6 +1,7 @@
 import { Component, inject, OnInit, signal } from '@angular/core';
 import { QuizItem } from '../../components/quiz-item/quiz-item';
 import { Router } from '@angular/router';
+import { Quiz } from '../../models/quiz.models';
 
 @Component({
   imports: [QuizItem],

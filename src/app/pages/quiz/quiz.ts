@@ -2,6 +2,8 @@ import { Component, inject, OnInit, signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { QuizDetails } from '../../components/quiz-details/quiz-details';
 import { QuizQuestion } from '../../components/quiz-question/quiz-question';
+import { QuizInfos } from '../../models/quiz.models';
+import { QuizResult } from '../../quiz-result';
 
 @Component({
   imports: [QuizDetails, QuizQuestion],
@@ -14,6 +16,7 @@ export class Quiz implements OnInit {
 
   private readonly activatedRoute = inject(ActivatedRoute);
   private readonly router = inject(Router);
+  private readonly quizResult = inject(QuizResult);
 
   id: number | null = 0;
   file: string | null = null;
@@ -23,15 +26,6 @@ export class Quiz implements OnInit {
   questions = signal<QuizInfos['questions'] | null>(null);
   answers = signal<number[]>([]);
   currentQuestionIndex = signal<number>(0);
-
-  get isFinish(): boolean {
-    for (let i = 0; i < (this.questions()?.length || 0); i++) {
-      if (this.answers()[i] == undefined || this.answers()[i] == null) {
-        return false;
-      }
-    }
-    return this.answers().length === (this.questions()?.length || 0);
-  }
 
   async ngOnInit(): Promise<void> {
     try {
@@ -82,10 +76,6 @@ export class Quiz implements OnInit {
     );
   }
 
-  goToPreviousQuestion(): void {
-    this.currentQuestionIndex.update((index) => Math.max(index - 1, 0));
-  }
-
   selectAnswer(questionId: number, selectedOption: number): void {
     this.answers.update((currentAnswers) => {
       const updatedAnswers = [...currentAnswers];
@@ -115,10 +105,11 @@ export class Quiz implements OnInit {
       }
     }
 
+    this.quizResult.setScore(score);
+    this.quizResult.setTotal(questions.length);
+
     void this.router.navigate(['/score'], {
       queryParams: {
-        score: score,
-        total: questions.length,
         answers: JSON.stringify(correctAnswers),
       },
     });
